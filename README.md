@@ -1,36 +1,33 @@
-# README #
+# What is this repository for?
 
-Hi!
-
-
-### What is this repository for? ###
-
-Music listening DJ site.
+This is my attempt to recreate a music listening DJ site that was shut down.
+Friends can visit the site and queue up YouTube music videos. It will then
+take turns playing videos from each person's queue.
 
 
 ### Directory Structure ###
-app
+**app**
 
 This contains the server side code.
 
-app/router
+**app/router**
 
 These are the server side API handlers for incoming requests.
 
-app/schema
+**app/schema**
 
 These are the mongoDB schema definitions.
 
-config
+**config**
 
 Configuration parsing module.
 
-public
+**public**
 
 These are all the front end files that deal with the initial landing
 page (login screen).
 
-view
+**view**
 
 These are the protected front end files. This is the stuff you see
 once you log in and are authenticated. (Playlist management
