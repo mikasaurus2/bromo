@@ -1,0 +1,220 @@
+<!doctype html>
+<html ng-app="viewPage">
+  <head>
+    <title>Main Page</title>
+    <!-- stylesheets -->
+    <link rel="stylesheet" type="text/css" href="./css/view.css" />
+    <link rel="stylesheet" type="text/css" href="./css/modal.css" />
+    <link rel="stylesheet" type="text/css" href="./css/popover.css" />
+    <!-- google's roboto font -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <!-- scripts -->
+    <script src="../es6poly.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="dist/angular-pageslide-directive.js"></script>
+    <script src="./modal_directive.js"></script>
+    <script src="./popover_directive.js"></script>
+    <script src="view_errors.js"></script>
+    <script src="view.js"></script>
+  </head>
+
+  <body ng-controller="modalPopupController">
+  <div ng-controller="popoverController">
+
+    <!-- top navigation bar -->
+    <div class="nav top">
+    </div>
+
+    <div id="mainContainer">
+
+      <!-- Main view in center of page -->
+      <div id="mainView">
+
+        <!-- embeded player -->
+        <div id="embeddedPlayitem">
+          <iframe width="480" height="360" src="//www.youtube.com/embed/LfmrHTdXgK4" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+      </div> <!-- mainView -->
+
+      <!-- Main view in right of page (for chat, etc) -->
+      <div id="mainRightView">
+        Chat stuff goes here
+      </div> <!-- mainRightView -->
+    </div> <!-- mainContainer -->
+
+    <!-- bottom navigation bar -->
+    <div ng-controller="playlistManagementController">
+      <div class="nav bottom">
+        <ul class="navList">
+
+          <li>
+            <div ng-controller="pageslideController">
+              <div ng-click="toggle()">Playlists</div>
+              <!-- Playlist panel; This has playlist manipulation and video searching -->
+              <pageslide id="playListSearch" ps-open="checked" ps-speed="0.25" ps-side="left" ps-size="80em">
+              <div class="panelMainContainer">
+                <!-- exit, search options at top of panel -->
+                <div id="searchBarContainer">
+                  <!-- comments to get rid of space between inline-block elements -->
+                  <div class="closePanel" ng-click="toggle()">X</div><!--
+               --><div id="searchBar">
+                    <input type="text" placeholder="Search Youtube" ng-model="plManageModel.searchString" ng-keypress="doSearch($event)" ng-click="searchClicked()">
+                  </div><!--
+               --><div id="searchType">
+                    <div id="searchTypeLogo"></div>
+                  </div>
+                </div>
+
+                <!-- main body container of panel -->
+                <div id="bodyContainer">
+                  <div id="playlistContainer">
+
+                    <h3 class="panelHeader">Playlists</h3>
+                    <div id="playlists">
+                      <ul>
+                        <li class="playlistContainer" ng-repeat="playlist in plManageModel.playlists" ng-click="playlistSelected($index)" ng-class="{ 'hilightedPlaylist': $index == plManageModel.selectedPlaylist }">
+                          <div class="playlist">
+                            <div class="playlistActive" ng-class="{ 'playlistIsNotActive': playlist.active == false }"></div>
+                            <div class="playlistName">{{ playlist.name }}</div>
+                            <div class="playlistLength">{{ playlist.playitems.length }}</div>
+                          </div>
+                        </li>
+                    </div>
+                    <div id="createPlaylist">
+                      <button ng-click="toggleCreatePlaylistModal()">Create Playlist</button>
+                    </div>
+
+                  </div><!--
+               --><div id="resultView">
+
+                    <!-- search results -->
+                    <div class="resultViewPanel" ng-class=" {'hiddenResultView': !plManageModel.searchResultView }">
+                      <h3 class="panelSearchHeader" ng-model="plManageModel.resultPanelInfo">{{ plManageModel.resultPanelInfo.header }}</h3>
+                      <div id="listItems">
+                        <ul>
+                          <li ng-repeat-start="result in plManageModel.searchResults">
+                            <!-- There must be some better way to use an angular template for image source.
+                                 Right now, this HTML is loaded before we actually do the search, so we
+                                 get errors from the browser saying it cant find the image source. -->
+                            <img src="{{result.thumbnail}}">
+                            <div class="resultTitle">{{ result.title }}</div>
+                            <div class="resultDuration">{{ result.duration.str }}</div>
+                            <div class="resultAdd" ng-click="toggleAddToPlaylistModal($event, result)">Add</div>
+                          </li>
+                          <hr ng-repeat-end/>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <!-- playlist items -->
+                    <div class="resultViewPanel" ng-class=" {'hiddenResultView': !plManageModel.playlistResultView }">
+                      <div id="playlistOptions" ng-model="plManageModel.resultPanelInfo">
+                        <div class="panelHeader">{{ plManageModel.resultPanelInfo.header }}</div>
+                        <button class="activatePlaylist" ng-hide="plManageModel.resultPanelInfo.infoObj.active"
+                                ng-click="setActivePlaylist(plManageModel.resultPanelInfo.infoObj)">Set Active</button>
+                        <button class="deletePlaylist" ng-click="toggleDeletePlaylistModal(plManageModel.resultPanelInfo.infoObj)">Delete</button>
+                      </div>
+                      <div id="listItems">
+                        <ul>
+                          <li ng-repeat="playitem in plManageModel.playlistPlayitems">
+                            <img src="{{playitem.thumbnail}}">
+                            <div class="resultTitle">{{ playitem.title }}</div>
+                            <div class="resultDuration">{{ playitem.duration }}</div>
+                            <div class="resultDelete" ng-click="deletePlayitem(playitem, plManageModel.resultPanelInfo.infoObj)">Del</div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                  </div> <!-- resultView -->
+
+                </div> <!-- body container of panel -->
+              </div>
+
+              </pageslide>
+            </div>
+          </li>
+
+
+        </ul>
+      </div>
+
+      <!--
+      Create Playlist
+      Use a dot model here, because if we just used 'createPlaylistShown',
+      we get into a weird situation with parent / child scopes
+      and prototypical inheritance. In that case, createPlaylistShown gets
+      written to the child scope (the directive) instead of the parent
+      scope (the modalPopupController) and the show/hide flag gets
+      out of sync.
+      -->
+      <modal-dialog show="createPlaylistShown.value" width="500px" height="18em">
+        <div ng-controller="createPlaylistController">
+          <div class="modalTitle">
+            <div>Create Playlist</div>
+          </div>
+          <div class="modalMsgContainer">
+            <div class="modalMsg modalErr" ng-model="msgstr">
+              {{ msgstr }}
+            </div>
+          </div>
+          <div class="modalBody">
+            <input type="text" placeholder="Playlist Name" ng-model="playlistName">
+          </div>
+          <div class="modalFooter">
+            <button class="confirmColor" ng-click="addPlaylist(playlistName)">Create</button><!--
+         --><button class="cancelColor" ng-click="cancelCreation()">Cancel</button>
+          </div>
+        </div>
+      </modal-dialog>
+
+      <!-- Delete Playlist Confirmation -->
+      <modal-dialog show="deletePlaylistShown.value" width="500px" height="18em">
+        <div ng-controller="deletePlaylistController">
+          <div class="modalTitle">
+            <div>Delete Playlist</div>
+          </div>
+          <div class="modalMsgContainer">
+            <div class="modalMsg modalErr" ng-model="msgstr">
+              {{ msgstr }}
+            </div>
+          </div>
+          <div class="modalBody" ng-model="bodystr">{{ bodystr }}</div>
+          <div class="modalFooter">
+            <button class="confirmColor" ng-click="deletePlaylist()">Delete</button><!--
+         --><button class="cancelColor" ng-click="cancelDeletion()">Cancel</button>
+          </div>
+        </div>
+      </modal-dialog>
+
+      <popover-dialog show="addToPlaylistOptions.show" top="addToPlaylistOptions.y" left="addToPlaylistOptions.x" width="15em" height="15em">
+        <div class="popoverContainer" id="poAddToPlaylist">
+          <div class="popoverHeader">
+            <div class="popoverHeaderIcon">+</div>
+            <div class="popoverHeaderTitle">Add To Playlist</div>
+          </div>
+          <div class="popoverBody">
+            <ul class="popoverList">
+              <!-- playitem is scope object representing the search result a user is trying to add to a playlist -->
+              <li ng-repeat="playlist in plManageModel.playlists" ng-click="addPlayitemToPlaylistSelected($index, playitem)">
+                <div class="playlistIcon"></div>
+                <div class="playlistName">{{ playlist.name }}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </popover-dialog>
+
+    </div>
+
+  </div>
+  </body>
+</html>
+
+
+
+
+
+

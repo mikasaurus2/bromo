@@ -1,0 +1,550 @@
+/*****************************/
+/*     main view             */
+/*****************************/
+html {
+  height: 100%;
+  min-height: 100px;
+}
+
+body {
+  background: black;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  height: calc(100% - 100px);
+  margin: 0px;
+}
+
+body > div {
+  height: 100%;
+}
+
+.nav {
+  background-color: #2C2F35;
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  left: 0px;
+}
+
+.bottom {
+  bottom: 0px;
+}
+
+.top {
+  top: 0px;
+}
+
+.navList {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.nav li {
+  display: inline;
+  padding: 10px;
+}
+
+.nav li:hover {
+  color: #0A16E5;
+}
+
+.nav div {
+  text-decoration: none;
+  color: #EDEDED;
+  display: inline-block;
+}
+
+.nav div:hover {
+  color: #0A16E5;
+  cursor: pointer;
+}
+
+button.confirmColor:hover {
+  background: #0E28E6;
+}
+
+button.cancelColor:hover {
+  background: #7825C5;
+}
+
+/* panel css */
+.panelMainContainer {
+  height: 100%;
+}
+
+/* playlist and search pageslide panel options */
+#playListSearch {
+  background: #eee;
+  color: black;
+}
+
+#mainContainer {
+  margin-top: 50px;
+  height: 100%;
+  background-color: green;
+  position: relative;
+  overflow: hidden;
+}
+
+#mainContainer > div {
+  height: 100%;
+}
+
+#embeddedPlayitem {
+  width: 480px;
+  margin: 0 auto;
+}
+
+#mainView {
+  background-color: blue;
+  width: 1600px;
+  position: absolute;
+  background: url('../images/aurora_dj_background.png') no-repeat center center;
+}
+
+#mainRightView {
+  background-color: red;
+  width: 320px;
+  position: absolute;
+  right: 0px;
+}
+
+
+/*****************************/
+/* search and playlist panel */
+/*****************************/
+
+#searchBarContainer {
+  position: absolute;
+  height: 3em;
+}
+
+#searchBarContainer div {
+  display: inline-block;
+  height: 3em;
+}
+
+#searchBarContainer div.closePanel {
+  background-image: linear-gradient(to bottom, #1F7EEA, #0A16E5);
+  width: 3em;
+  vertical-align: top;
+}
+
+#searchBarContainer #searchBar {
+  display: inline-flex;
+  align-items: center;
+  background: #4E5464;
+  width: 69em;
+}
+
+#searchBar > input {
+  width: 100%;
+  padding: 0 0 0 1em;
+  border: 0px;
+  font-size: 1.2em;
+  height: 1.9em;
+  background: #15181D;
+  color: #C3C3C3;
+}
+
+#searchBarContainer #searchType {
+  width: 8em;
+  float: right;
+  display: inline-flex;
+  align-items: center;
+  background: #4E5464;
+}
+
+#searchType #searchTypeLogo {
+  background: url('../images/YouTube-logo-light.png') no-repeat center center;
+  background-size: 100px;
+  width: 7em;
+  margin-left: .5em;
+  height: 2.2em;
+  background-color: #15181D;
+}
+
+#bodyContainer {
+  height: 100%;
+}
+
+.panelHeader {
+  color: #C3C3C3;
+}
+
+.panelSearchHeader {
+  color: #C3C3C3;
+  margin-top: 3em;
+  margin-left: 1em;
+}
+
+#createPlaylist {
+  position: absolute;
+  bottom: 0em;
+  width: 20%;
+}
+
+#createPlaylist > button {
+  width: 100%;
+  height: 3em;
+  background: #2C2F35;
+  border: 0px;
+  color: white;
+  transition: all 0.25s linear;
+}
+
+#createPlaylist > button:hover {
+  background: #0E28E6;
+}
+
+
+/*****************************/
+/* playlist panel            */
+/*****************************/
+
+#playlistContainer {
+  display: inline-block;
+  background: #0A0F25;
+  height: 100%;
+  width: 20%;
+  overflow-y: auto;
+}
+
+#playlistContainer .panelHeader {
+  margin-top: 3em;
+  margin-left: 1em;
+}
+
+#playlistOptions .panelHeader {
+  padding-left: 1em;
+  width: 100%;
+}
+
+#playlistOptions button {
+  border: 0px;
+  padding: 0px;
+  width: 4em;
+  height: 100%;
+  color: white;
+  transition: all 0.25s linear;
+}
+
+#playlistOptions .activatePlaylist {
+  background: #336E83;
+}
+
+#playlistOptions .deletePlaylist {
+  background: #533383;
+}
+
+#playlistOptions button.activatePlaylist:hover {
+  background: #2C97BD;
+}
+
+#playlistOptions button.deletePlaylist:hover {
+  background: #7825C5;
+}
+
+#playlists {
+  color: white;
+}
+
+#playlists > ul {
+  font-size: .8em;
+  list-style-type: none;
+  padding: 0px;
+  margin-bottom: 3em;
+}
+
+#playlists > ul > li {
+  height: 2.8em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hilightedPlaylist {
+  background: #212E73;
+}
+
+#playlists .playlistIsNotActive {
+  visibility: hidden;
+}
+
+#playlists .playlistActive {
+  width: 1em;
+  height: 1em;
+  background-color: #249AA9;
+}
+
+#playlists .playlistName {
+  width: 13em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 1em;
+  margin-left: 1em;
+}
+
+#playlists .playlistLength {
+  float: right;
+  margin-right: .5em;
+  color: #7E97F9;
+  width: 2em;
+  text-align: right;
+}
+
+.playlist {
+  margin-left: 1em;
+  display: inline-flex;
+  align-items: center;
+}
+
+#listItems {
+  height: calc(100% - 6em);
+  overflow-y: auto;
+}
+
+
+/*****************************/
+/* result view panel         */
+/*****************************/
+
+#bodyContainer #resultView {
+  display: inline-block;
+  vertical-align: top;
+  height: 100%;
+  background: #15181D;
+  width: 80%;
+}
+
+.resultViewPanel {
+  margin-top: 3em;
+  height: 100%;
+}
+
+#playlistOptions {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  height: 3em;
+  background: #2C2F32;
+}
+
+#resultView ul {
+  margin-top: 0em;
+  list-style-type: none;
+  padding-left: 0em;
+  margin-left: 1.5em;
+}
+
+#resultView li {
+  height: 2.8em;
+  margin: .5em 0em .5em 0;
+}
+
+#resultView hr {
+  width: 90%;
+  border: 1px solid #2C2F35;
+  margin-left: 4em;
+}
+
+#resultView img {
+  height: 2.8em;
+  float: left;
+}
+
+#resultView  li > div {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 3em;
+}
+
+#resultView .resultTitle {
+  margin-left: 1em;
+  width: 45em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background: #15181D;
+  color: white;
+}
+
+#resultView .resultDuration {
+  background: #15181D;
+  color: white;
+  margin-left: 1em;
+  width: 4em;
+  text-align: right;
+}
+
+#resultView .resultAdd {
+  margin-left: 1em;
+  color: white;
+  width: 3em;
+  text-align: center;
+  background: #2F3D77;
+  cursor: pointer;
+}
+
+#resultView .resultDelete {
+  margin-left: 1em;
+  color: white;
+  width: 3em;
+  text-align: center;
+  background: #772F2F;
+  cursor: pointer;
+}
+
+.hiddenResultView {
+  position: absolute;
+  visibility: hidden;
+}
+
+
+/*****************************/
+/* modal dialog box          */
+/*****************************/
+
+.modalTitle {
+  background: #2B3445;
+  color: black;
+  width: 100%;
+  text-align: center;
+  height: 4em;
+  display: table;
+}
+
+.modalTitle > div {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 2em;
+  color: white;
+}
+
+.modalMsgContainer {
+  text-align: center;
+  margin-top: .7em;
+  width: 100%;
+  height: 1.5em;
+}
+
+.modalMsg {
+  /*
+  text-align: center;
+  margin-top: 1em;
+  height: 1.2em;
+  */
+}
+
+.modalErr {
+  color: #F44E4E;
+}
+
+.modalBody {
+  margin: 1em 1em 0 1em;
+  text-align: center;
+}
+
+.modalBody > input {
+  width: 70%;
+  border: 0px;
+  font-size: 1.2em;
+  height: 2.5em;
+  background: #2B3445;
+  color: white;
+  padding: 0 1em 0 1em;
+}
+
+.modalFooter {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+
+.modalFooter > button {
+  border: 0px;
+  padding: 0px;
+  width: 50%;
+  height: 2.5em;
+  font-size: 1.5em;
+  color: #C3C3C3;
+  background: #2B3445;
+  transition: all 0.25s linear;
+}
+
+
+/*****************************/
+/* popover dialog box        */
+/*****************************/
+
+.popoverContainer {
+  background: green;
+}
+
+#poAddToPlaylist {
+  color: white;
+}
+
+#poAddToPlaylist .popoverHeader {
+  display: inline-flex;
+  align-items: center;
+  height: 3em;
+  width: 100%;
+  background: #4E5464;
+}
+
+#poAddToPlaylist .popoverHeaderIcon {
+  width: 3em;
+  height: 100%;
+  text-align: center;
+  border-right: 2px solid black;
+  background: #2F3D77;
+  line-height: 3em;
+}
+
+#poAddToPlaylist .popoverHeaderTitle {
+  width: 9em;
+  text-align: center;
+}
+
+#poAddToPlaylist .popoverBody {
+  height: 12em;
+  background: #1D2025;
+  overflow-y: auto;
+}
+
+#poAddToPlaylist ul.popoverList {
+  margin-top: 0em;
+  margin-left: 0em;
+  list-style-type: none;
+  padding-left: 0em;
+  font-size: .8em;
+}
+
+#poAddToPlaylist li {
+  height: 2em;
+}
+
+#poAddToPlaylist li:hover {
+  background: #212E73;
+}
+
+#poAddToPlaylist li > div {
+  display: inline-block;
+  vertical-align: top;
+}
+
+#poAddToPlaylist .playlistIcon {
+  width: 2em;
+  height: 2em;
+}
+
+#poAddToPlaylist .playlistName {
+  margin-left: 1em;
+  height: 2em;
+  line-height: 2em;
+}
+
+
+
+

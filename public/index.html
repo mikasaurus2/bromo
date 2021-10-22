@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html ng-app="userAuth">
+<head>
+  <title>Bromo</title>
+  <link rel="stylesheet" type="text/css" href="./css/index.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  <!-- google's roboto font -->
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <script src="view_errors.js"></script>
+  <script src="index.js"></script>
+</head>
+<body>
+
+  <!-- ng-controller creates a new $scope object for the DOM element -->
+  <div ng-controller="userAuthController">
+    <div class="authView">
+
+      <ul class="authTabs">
+        <li id="registerTab">
+          <a href="#register" class="active" ng-click="createMode()">Register</a>
+        </li>
+        <li id="loginTab">
+          <a href="#login" ng-click="loginMode()">Login</a>
+        </li>
+      </ul>
+
+      <div class="authForm">
+        <div class="authMsg" ng-model="msgstr">
+          {{ msgstr }}
+        </div>
+        <ul class="authInputs">
+          <li>
+            <input type="text" placeholder="Username" ng-model="user.username"/>
+          </li>
+          <li>
+            <input type="password" placeholder="Password" ng-model="user.password"/>
+          </li>
+        </ul>
+        <div>
+          <button class="button" ng-click="createUser()" ng-show="create">Create Account</button>
+        </div>
+        <div>
+          <button class="button" ng-click="loginUser()" ng-show="!create">Login</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div>
+    <a href="./about.html">About Us</a>
+  </div>
+
+</body>
+</html>
+
+
+
+
