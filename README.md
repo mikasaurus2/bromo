@@ -4,6 +4,8 @@ This is my attempt to recreate a music listening DJ site that was shut down.
 Friends can visit the site and queue up YouTube music videos. It will then
 take turns playing videos from each person's queue.
 
+Please note, this is a pretty dated project and the code has not been changed since 2015.
+
 
 ### Directory Structure ###
 **app**
